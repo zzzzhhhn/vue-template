@@ -30,8 +30,7 @@ if (!isProduction) {
   cdn.js[0] = "//cdn.bootcss.com/vue/2.6.10/vue.js";
 }
 //依赖包扫描工具
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 //压缩代码
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 // gzip压缩
@@ -43,7 +42,8 @@ const _UglifyJsPlugin = new UglifyJsPlugin({
       drop_debugger: true,
       drop_console: true,
       pure_funcs: ["console.log"]
-    }
+    },
+    warnings: false
   },
   sourceMap: false,
   parallel: true
@@ -66,7 +66,7 @@ let _ProvidePlugin = new webpack.ProvidePlugin({
 let plugins = ["production", "development"].includes(process.env.NODE_ENV)
   ? [_ProvidePlugin]
   : [_ProvidePlugin, _UglifyJsPlugin, _CompressionPlugin];
-plugins.push(new BundleAnalyzerPlugin());
+// plugins.push(new BundleAnalyzerPlugin());
 
 module.exports = {
   transpileDependencies: ["vuetify"],
@@ -75,7 +75,7 @@ module.exports = {
   // 打包输出文件目录
   outputDir: "dist",
   // 是否在开发环境下通过 eslint-loader 在每次保存时 lint 代码
-  lintOnSave: true,
+  lintOnSave: !isProduction,
   // webPack 相关配置
   chainWebpack: config => {
     config.output.filename("[name].[hash].js").end();
