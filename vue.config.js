@@ -15,10 +15,16 @@ const cdn = {
   externals: {
     vue: "Vue",
     moment: "moment",
-    jquery: "jquery"
+    jquery: "jquery",
+    Vuetify: "Vuetify"
   },
   // cdn的css链接
-  css: [],
+  css: [
+    "//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900",
+    "//cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css",
+    "//cdn.jsdelivr.net/npm/vuetify@2.3.7/dist/vuetify.min.css",
+    "//cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css"
+  ],
   // cdn的js链接
   js: [
     "//cdn.bootcss.com/vue/2.6.10/vue.min.js",
@@ -79,8 +85,10 @@ module.exports = {
   // webPack 相关配置
   chainWebpack: config => {
     config.output.filename("[name].[hash].js").end();
+    config.output.chunkFilename("js/[name].[contenthash:8].js").end();
     // ============注入cdn start============
     config.plugin("html").tap(args => {
+      args[0].title = "XXXX";
       // 生产环境或本地需要cdn时，才注入cdn
       if (isProduction || devNeedCdn) args[0].cdn = cdn;
       return args;
@@ -97,7 +105,8 @@ module.exports = {
         "@assets": resolve("src/assets"),
         "@utils": resolve("src/utils"),
         "@mixins": resolve("src/mixins"),
-        "@pub": resolve("public")
+        "@pub": resolve("public"),
+        "@plugins": resolve("src/plugins")
       }
     },
     plugins: plugins

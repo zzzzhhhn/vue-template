@@ -1,5 +1,6 @@
+<!--注册页-->
 <template>
-  <v-app class="login-panel">
+  <v-app class="register-panel">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-text-field
         v-model="name"
@@ -81,7 +82,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-panel {
+.register-panel {
   width: 100%;
   height: 100%;
 }

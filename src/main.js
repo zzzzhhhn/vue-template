@@ -8,6 +8,7 @@ import $ from "jquery";
 import moment from "moment";
 import XEUtils from "xe-utils";
 import VXEUtils from "vxe-utils";
+import "@assets/scss/common.scss";
 
 window.$ = $;
 window.moment = moment;
